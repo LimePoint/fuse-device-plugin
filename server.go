@@ -20,6 +20,8 @@ const (
 
 // FuseDevicePlugin implements the Kubernetes device plugin API
 type FuseDevicePlugin struct {
+	pluginapi.UnimplementedDevicePluginServer
+
 	devs   []*pluginapi.Device
 	socket string
 
@@ -160,7 +162,7 @@ func (m *FuseDevicePlugin) Allocate(ctx context.Context, reqs *pluginapi.Allocat
 	var responses pluginapi.AllocateResponse
 
 	for _, req := range reqs.ContainerRequests {
-		for _, id := range req.DevicesIDs {
+		for _, id := range req.DevicesIds {
 			if !deviceExists(devs, id) {
 				return nil, fmt.Errorf("invalid allocation request: unknown device: %s", id)
 			}
