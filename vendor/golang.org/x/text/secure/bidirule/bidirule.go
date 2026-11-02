@@ -203,10 +203,6 @@ func (t *Transformer) isRTL() bool {
 	return t.seen&isRTL != 0
 }
 
-func (t *Transformer) isFinal() bool {
-	return t.state == ruleLTRFinal || t.state == ruleRTLFinal || t.state == ruleInitial
-}
-
 // Reset implements transform.Transformer.
 func (t *Transformer) Reset() { *t = Transformer{} }
 
@@ -337,4 +333,8 @@ func (t *Transformer) advanceString(s string) (n int, ok bool) {
 		n += sz
 	}
 	return n, true
+}
+
+func (t *Transformer) isFinal() bool {
+	return t.state == ruleLTRFinal || t.state == ruleRTLFinal || t.state == ruleInitial
 }
